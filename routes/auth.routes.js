@@ -9,13 +9,14 @@ const router = Router();
 
 // /api/auth/register
 router.post(
-  '/regiter',
+  '/register',
   [
     check('email', 'Wrong email').isEmail(),
     check('password', 'Password must be at least 8 characters and num').isLength({min: 8}).matches(/\d/)
   ],
   async (req, res) => {
   try{
+    
     const errors = validationResult(req);
 
     if (!errors.isEmpty()){
@@ -29,17 +30,17 @@ router.post(
 
     const candidate = await User.findOne({email})
 
-    if(!candidate) {
+    if(candidate) {
       return res.status(400).json({
         message: 'Такой пользователь существует'
       })
     }
 
-    if(password===confirmPassword) {
-      return res.status(400).json({
-        message: 'Пароли не совподают'
-      })
-    }
+    // if(password === confirmPassword) {
+    //   return res.status(400).json({
+    //     message: 'Пароли не совподают'
+    //   })
+    // }
 
     const hachedPassword = await bcrypt.hash(password, 15)
 
