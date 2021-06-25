@@ -36,7 +36,7 @@ router.post(
       })
     }
 
-    // if(password === confirmPassword) {
+    // if(!(password === confirmPassword)) {
     //   return res.status(400).json({
     //     message: 'Пароли не совподают'
     //   })
@@ -76,7 +76,7 @@ router.post(
     if (!errors.isEmpty()){
       return res.status(400).json({
         errors: errors.array(),
-        message: 'Некоректные данные при входе '
+        message: 'Некоректные данные при входе'
       })
     }
 
@@ -91,7 +91,7 @@ router.post(
     const isMatch = await bcrypt.compare(password, user.password) 
 
     if(!isMatch) {
-      res.status(400).json({message: 'Неверный пароль'})
+      res.status(400).json({message: 'Неверные данные'})
     }
 
      const token = jwt.sign(
@@ -109,4 +109,4 @@ router.post(
   }
 });
 
-module.exports = router
+module.exports = router;

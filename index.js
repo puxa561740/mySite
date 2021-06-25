@@ -20,8 +20,7 @@ async function start () {
       console.log(`App has been started on port ${PORT}...`)
     })
   } catch (e) {
-    console.log(`Server Error`, e.massage)
-    process.exit(1)
+    console.log(`Server Error`, e.massage);
   }
 };
 
