@@ -10,7 +10,18 @@ const sсhema = new Schema({
     type: String, 
     required: true,
   },
-  links:[{type: Types.ObjectId, ref: 'Link'}]
+  Projects:[{
+    type: Schema.Types.ObjectId, 
+    ref: 'Project'
+  }],
+  SocialLinks: {
+    type: Schema.Types.ObjectId, 
+    ref: 'SocialLinks'
+  },
+  AboutUser: [{
+    type: Schema.Types.ObjectId, 
+    ref: 'AboutUser'
+  }]
 })
 
-module.exports = model('User', sсhema)
+module.exports = model('User', sсhema);

@@ -4,6 +4,7 @@ const {check, validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const config = require('config');
+const SocialLinks = require('../models/SocialLinks');
 
 const router = Router();
 
@@ -79,9 +80,8 @@ router.post(
         message: 'Некоректные данные при входе'
       })
     }
-
-    const {email, password} = req.body
-
+    const {email, password} = req.body;
+    
     const user = await User.findOne({email});
 
     if(!user) {
