@@ -1,20 +1,37 @@
 const {Router} = require('express');
 const User = require('../models/User');
-const About = require('../models/AboutUser');
+const AboutUser = require('../models/AboutUser');
 const Project = require('../models/Project');
 const SocialLinks = require('../models/SocialLinks');
 const auth = require('../middleware/auth.middleware');
 
 const router = Router();
 
-//api/user/data/change/aboutUser
+//api/user/data/change/about
 
 router.post(
   '/change/about',
   auth,
   async (req, res) => {
     try{
-      //  const changes = await About
+      const about = await AboutUser.findOne({owner: req.user.id})
+      if(!about) {
+        const about = new AboutUser({
+          ...req.body
+        });
+        await about.save();
+        const aboutNew = await AboutUser.findOne({owner: req.user.id})
+        res.status(201).json({aboutNew});
+      }
+      
+      await AboutUser.collection.drop();
+      const abour = new AboutUser({
+        ...req.body
+      });
+
+      await abour.save();
+      const aboutNew = await AboutUser.findOne({owner: req.user.id})
+      res.status(201).json({aboutNew});
     } catch (e) {
       res.status(500).json({
         message: 'Что то пошло не так в дата'
@@ -79,8 +96,7 @@ router.get(
       const user = await User.find({ email });
       const links = await SocialLinks.find({owner: user.id});
       const project = await Project.find({owner: user.id});
-      const about = await About.find({owner: user.id});
-
+      const about = await AboutUser.find({owner: user.id});
       const data = {
         links,
         project,

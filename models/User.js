@@ -18,10 +18,10 @@ const sсhema = new Schema({
     type: Schema.Types.ObjectId, 
     ref: 'SocialLinks'
   },
-  AboutUser: [{
+  AboutUser: {
     type: Schema.Types.ObjectId, 
     ref: 'AboutUser'
-  }]
+  }
 })
 
 module.exports = model('User', sсhema);
